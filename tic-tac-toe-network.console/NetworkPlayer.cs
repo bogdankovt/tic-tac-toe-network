@@ -21,10 +21,6 @@ namespace tic_tac_toe_network.console
             this.writer = new StreamWriter(this.stream);
             this.writer.AutoFlush = true;
         }
-        public void setNameAndSymbol(string name, char symbol){
-            this.name = name;
-            this.symbol = symbol;
-        }
         public void write(string text) {
             this.writer.Write(text);
         }

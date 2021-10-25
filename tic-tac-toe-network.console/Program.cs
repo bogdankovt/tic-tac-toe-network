@@ -32,19 +32,16 @@ namespace tic_tac_toe_network.console
             }
             player.writeLine("\n\n");
         }
-
         public static String[] askStepCoords(NetworkPlayer player) {
             player.write("Make step: ");
             return player.read().Split(" ");
         }
-
         public static void printFieldToAllPlayers(List<NetworkPlayer> players, char[,] field, int fieldsize) {
             foreach (var player in players)
             {
                 printField(player,field, fieldsize );
             }
         }
-
         public static void seeInfoPlayers(List<NetworkPlayer> players) {
             foreach (var player in players)
             {
@@ -81,17 +78,21 @@ namespace tic_tac_toe_network.console
                     List<NetworkPlayer> players = new List<NetworkPlayer>();
                     
                     while(players.Count < 2 ) {
-                        
+
                         TcpClient client = server.AcceptTcpClient();
 
                         // Get a stream object for reading and writing
                         NetworkPlayer player = new NetworkPlayer(client);
-                        player.setNameAndSymbol(askName(player), askSymbol(player));
+                        player.name = askName(player);
+                        player.symbol = askSymbol(player);
 
                         System.Console.WriteLine($"Player {player.name} connected | {player.symbol}");
                         players.Add(player);
                         if(players.Count < 2) player.writeLine("\nWaiting other players....");
+
                     }
+
+                    
                     Game game = new Game(3);
                     game.createGame(players[0], players[1]);
                     seeInfoPlayers(players);
